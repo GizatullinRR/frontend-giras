@@ -1,0 +1,55 @@
+:host {
+  display: block;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.admin {
+  width: min(48rem, 100%);
+}
+
+.page-head {
+  margin-bottom: 1.75rem;
+}
+
+.eyebrow {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.85rem;
+  color: var(--signal);
+  margin-bottom: 0.55rem;
+}
+
+.lead {
+  margin-top: 0.85rem;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+.admin-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+
+.admin-list li {
+  display: grid;
+  gap: 0.2rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.admin-list strong {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 1.05rem;
+}
+
+.admin-list span {
+  color: var(--steel);
+  font-size: 0.95rem;
+}

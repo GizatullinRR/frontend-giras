@@ -1,0 +1,159 @@
+<section class="hero home-screen--intro" id="intro">
+  <div class="hero-media" aria-hidden="true">
+    @for (slide of slides; track slide; let i = $index) {
+      <img
+        class="hero-slide"
+        [class.is-active]="activeSlide() === i"
+        [src]="slide"
+        alt=""
+        [attr.loading]="i === 0 ? 'eager' : 'lazy'"
+        decoding="async"
+      />
+    }
+    <div class="hero-veil"></div>
+  </div>
+
+  <div class="hero-stage">
+    <div class="hero-copy">
+      <p class="hero-brand">Гирас</p>
+      <h1>Спецодежда для цеха, склада и улицы</h1>
+      <p class="hero-text">
+        Основной фокус — рабочая одежда. Плюс обувь, перчатки и СИЗ в одном
+        каталоге.
+      </p>
+    </div>
+
+    <div class="hero-band" id="home-band">
+      <article class="band-item">
+        <div class="band-mark" aria-hidden="true">
+          <span class="band-index">01</span>
+          <svg class="band-icon" viewBox="0 0 24 24" focusable="false">
+            <path
+              d="M4 7h16M7 12h10M10 17h4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+            />
+          </svg>
+        </div>
+        <h2>Под задачу</h2>
+        <p>
+          Подбираем экипировку под склад, цех и улицу: от куртки до перчаток и
+          обуви — без универсального шума.
+        </p>
+      </article>
+      <article class="band-item">
+        <div class="band-mark" aria-hidden="true">
+          <span class="band-index">02</span>
+          <svg class="band-icon" viewBox="0 0 24 24" focusable="false">
+            <rect
+              x="5"
+              y="10"
+              width="14"
+              height="9"
+              rx="1.5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+            />
+            <path
+              d="M8 10V8a4 4 0 0 1 8 0"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+            />
+          </svg>
+        </div>
+        <h2>Без лишнего</h2>
+        <p>
+          Каталог можно смотреть без входа. Аккаунт понадобится только для заказа
+          и личного кабинета.
+        </p>
+      </article>
+      <article class="band-item">
+        <div class="band-mark" aria-hidden="true">
+          <span class="band-index">03</span>
+          <svg class="band-icon" viewBox="0 0 24 24" focusable="false">
+            <path
+              d="M4 8h6v12H4zM14 4h6v16h-6z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+        <h2>Рабочий ритм</h2>
+        <p>
+          Фокус на посадке, материале и смене. Категории и подкатегории — чтобы
+          быстро найти нужное.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="home-catalog home-screen--catalog" id="catalog">
+  <div class="catalog-inner">
+    <header class="catalog-head">
+      <p class="eyebrow">Ассортимент</p>
+      <h2>Категории и подкатегории</h2>
+      <p>
+        Полный каталог соберём по разделам. Сейчас открыта витрина спецодежды —
+        остальные направления подключим в том же формате.
+      </p>
+    </header>
+
+    <div class="catalog-grid">
+      <article class="catalog-item">
+        <div class="catalog-media catalog-media--workwear" aria-hidden="true"></div>
+        <div class="catalog-body">
+          <h3>Спецодежда</h3>
+          <p>Куртки, брюки, комбинезоны, костюмы, жилеты</p>
+        </div>
+      </article>
+
+      <article class="catalog-item">
+        <div class="catalog-media catalog-media--shoes" aria-hidden="true"></div>
+        <div class="catalog-body">
+          <h3>Обувь</h3>
+          <p>Ботинки, сапоги, галоши, стельки</p>
+        </div>
+      </article>
+
+      <article class="catalog-item">
+        <div class="catalog-media catalog-media--gloves" aria-hidden="true"></div>
+        <div class="catalog-body">
+          <h3>Перчатки</h3>
+          <p>Защитные, утеплённые, кислотостойкие, монтажные</p>
+        </div>
+      </article>
+
+      <article class="catalog-item">
+        <div class="catalog-media catalog-media--ppe" aria-hidden="true"></div>
+        <div class="catalog-body">
+          <h3>СИЗ</h3>
+          <p>Каски, очки, наушники, респираторы</p>
+        </div>
+      </article>
+
+      <article class="catalog-item">
+        <div class="catalog-media catalog-media--accessories" aria-hidden="true"></div>
+        <div class="catalog-body">
+          <h3>Аксессуары</h3>
+          <p>Пояса, наколенники, сумки, чехлы</p>
+        </div>
+      </article>
+
+      <article class="catalog-item">
+        <div class="catalog-media catalog-media--care" aria-hidden="true"></div>
+        <div class="catalog-body">
+          <h3>Уход</h3>
+          <p>Средства для чистки, пропитки, расходники</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>

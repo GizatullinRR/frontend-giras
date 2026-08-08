@@ -1,0 +1,91 @@
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/" (click)="goHome($event)">Гирас</a>
+
+    <div class="header-contacts">
+      <a class="header-phone" href="tel:+78001234567">+7 (800) 123-45-67</a>
+      <a class="header-mail" href="mailto:info@giras.ru">info@giras.ru</a>
+    </div>
+
+    <div class="header-end">
+      <form
+        class="header-search"
+        [class.has-query]="query().trim().length > 0"
+        (submit)="search($event)"
+        role="search"
+      >
+        <label class="visually-hidden" for="header-search-q">Поиск по каталогу</label>
+        <input
+          id="header-search-q"
+          name="q"
+          type="search"
+          autocomplete="off"
+          placeholder="Поиск: куртка, ботинки…"
+          [value]="query()"
+          (input)="query.set($any($event.target).value)"
+        />
+        @if (query().trim().length > 0) {
+          <button
+            type="button"
+            class="header-search-clear"
+            aria-label="Очистить"
+            (click)="clearSearch()"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path
+                d="M7 7l10 10M17 7 7 17"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+        }
+        <button type="submit" class="header-search-submit" aria-label="Найти">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2" />
+            <path
+              d="M16.2 16.2 20 20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          </svg>
+        </button>
+      </form>
+
+      <nav class="site-nav" aria-label="Основное меню">
+        <a class="nav-cta" href="#catalog" (click)="goToCatalog($event)">Каталог</a>
+        <span class="nav-sep" aria-hidden="true"></span>
+        @if (auth.isLoggedIn()) {
+          <span class="user-email" title="{{ auth.user()?.email }}">{{ auth.user()?.email }}</span>
+          @if (auth.isAdmin()) {
+            <a routerLink="/admin" routerLinkActive="is-active">Админ</a>
+          }
+          <button type="button" class="link-btn" (click)="logout()">Выйти</button>
+        } @else {
+          <a routerLink="/login" routerLinkActive="is-active">Войти</a>
+          <a routerLink="/register" routerLinkActive="is-active">Регистрация</a>
+        }
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="site-main">
+  <router-outlet />
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <a class="footer-brand" routerLink="/">Гирас</a>
+    <p class="footer-text">Экипировка для производства, склада и улицы</p>
+    <nav class="footer-nav">
+      <a href="#catalog" (click)="goToCatalog($event)">Спецодежда</a>
+      <a routerLink="/login">Вход</a>
+      <a routerLink="/register">Регистрация</a>
+    </nav>
+  </div>
+</footer>
