@@ -1,0 +1,184 @@
+<header class="toolbar">
+  <a class="admin-btn admin-btn--quiet" routerLink="/admin/workwear">← К списку</a>
+  <h1>{{ isNew() ? 'Новая позиция' : 'Правка' }}</h1>
+  <div class="toolbar-actions">
+    <a class="admin-btn admin-btn--ghost" routerLink="/admin/workwear">Отмена</a>
+    <button class="admin-btn" type="submit" form="ww-form" [disabled]="saving() || loading()">
+      {{ saving() ? 'Сохраняем…' : isNew() ? 'Создать' : 'Сохранить' }}
+    </button>
+  </div>
+</header>
+
+@if (loading()) {
+  <p class="admin-muted">Загружаем…</p>
+} @else if (!isNew() && !item()) {
+  <p class="admin-error">{{ error() ?? 'Позиция не найдена' }}</p>
+} @else {
+  <div class="editor">
+    <form id="ww-form" class="admin-card form-card" [formGroup]="form" (ngSubmit)="submit()">
+      <section>
+        <h2>Товар</h2>
+        <div class="ww-grid">
+          <label class="span-3">
+            Название
+            <input type="text" formControlName="name" />
+          </label>
+          <label class="span-3">
+            Артикул
+            <input type="text" formControlName="article" />
+          </label>
+          <label class="span-all">
+            Описание
+            <textarea formControlName="description" rows="3"></textarea>
+          </label>
+        </div>
+      </section>
+
+      <section>
+        <h2>Параметры</h2>
+        <div class="ww-grid">
+          <label class="span-2">
+            Категория
+            <select formControlName="category">
+              @for (option of categories; track option.value) {
+                <option [value]="option.value">{{ option.label }}</option>
+              }
+            </select>
+          </label>
+          <label class="span-2">
+            Комплект
+            <select formControlName="set">
+              @for (option of sets; track option.value) {
+                <option [value]="option.value">{{ option.label }}</option>
+              }
+            </select>
+          </label>
+          <label class="span-2">
+            Сезон
+            <select formControlName="season">
+              @for (option of seasons; track option.value) {
+                <option [value]="option.value">{{ option.label }}</option>
+              }
+            </select>
+          </label>
+          <label class="span-2">
+            Пол
+            <select formControlName="gender">
+              @for (option of genders; track option.value) {
+                <option [value]="option.value">{{ option.label }}</option>
+              }
+            </select>
+          </label>
+          <label class="span-2">
+            Цвет
+            <input type="text" formControlName="color" />
+          </label>
+          <label class="span-2">
+            Материал
+            <input type="text" formControlName="material" />
+          </label>
+          <label class="span-3">
+            Цена, ₽
+            <input type="number" formControlName="price" min="0" step="0.01" />
+          </label>
+          <label class="span-3 cert-label">
+            Минпромторг
+            <button type="button" class="cert-btn" [class.is-on]="certified()" (click)="toggleCertified()">
+              {{ certified() ? 'Есть' : 'Нет' }}
+            </button>
+          </label>
+        </div>
+      </section>
+
+      <section>
+        <div class="sizes-head">
+          <h2>Размеры</h2>
+          <button type="button" class="admin-btn admin-btn--quiet" (click)="toggleAllSizes()">
+            {{ allSizesSelected() ? 'Снять все' : 'Выбрать все' }}
+          </button>
+        </div>
+        <table class="size-table">
+          <thead>
+            <tr>
+              <th>Обхват</th>
+              @for (height of sizeHeights; track height) {
+                <th>{{ height }}</th>
+              }
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of sizeRows; track row.chest) {
+              <tr>
+                <th>
+                  {{ row.chest }}
+                  <span>({{ row.ru }})</span>
+                </th>
+                @for (size of row.sizes; track size) {
+                  <td>
+                    <button
+                      type="button"
+                      class="size-chip"
+                      [class.is-on]="hasSize(size)"
+                      (click)="toggleSize(size)"
+                    >
+                      {{ hasSize(size) ? 'Есть' : '—' }}
+                    </button>
+                  </td>
+                }
+              </tr>
+            }
+          </tbody>
+        </table>
+      </section>
+
+      @if (error()) {
+        <p class="admin-error">{{ error() }}</p>
+      }
+    </form>
+
+    <aside class="admin-card photos">
+      <header class="photos-head">
+        <h2>Фото</h2>
+        @if (!isNew()) {
+          <span class="admin-muted">{{ photoCount() }}</span>
+        }
+      </header>
+
+      @if (isNew()) {
+        <p class="admin-muted photos-hint">Сначала сохраните позицию — потом можно будет загрузить снимки.</p>
+      } @else {
+        <label class="file-btn">
+          {{ uploading() ? 'Загружаем…' : 'Добавить фото' }}
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            [disabled]="uploading()"
+            (change)="onFiles($event)"
+          />
+        </label>
+
+        @if (photoCount() === 0) {
+          <p class="admin-muted photos-hint">Пока нет файлов. Можно несколько сразу.</p>
+        } @else {
+          <div class="photo-grid">
+            @for (key of item()?.imageKeys ?? []; track key; let i = $index) {
+              <figure>
+                <img [src]="item()?.imageUrls?.[i]" [alt]="'Фото ' + (i + 1)" />
+                <button
+                  type="button"
+                  class="photo-del"
+                  [disabled]="uploading()"
+                  (click)="removeImage(key)"
+                  aria-label="Удалить фото"
+                >
+                  ×
+                </button>
+              </figure>
+            }
+          </div>
+        }
+      }
+    </aside>
+  </div>
+}

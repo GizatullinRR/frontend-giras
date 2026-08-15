@@ -1,0 +1,172 @@
+<section class="page-panel catalog">
+  <div class="layout">
+    <aside class="filters" aria-label="Фильтры">
+      <div class="filters-top">
+        <h2>Подбор</h2>
+        <button
+          type="button"
+          class="clear"
+          [class.is-hidden]="!hasFilters()"
+          [disabled]="!hasFilters()"
+          (click)="clearFilters()"
+        >
+          Сбросить
+        </button>
+      </div>
+
+      <div class="group">
+        <p>Категория</p>
+        <div class="chips">
+          @for (option of categories; track option.value) {
+            <button
+              type="button"
+              class="chip"
+              [class.is-on]="category() === option.value"
+              (click)="toggle('category', category(), option.value)"
+            >
+              {{ option.label }}
+            </button>
+          }
+        </div>
+      </div>
+
+      <div class="group">
+        <p>Сезон</p>
+        <div class="chips">
+          @for (option of seasons; track option.value) {
+            <button
+              type="button"
+              class="chip"
+              [class.is-on]="season() === option.value"
+              (click)="toggle('season', season(), option.value)"
+            >
+              {{ option.label }}
+            </button>
+          }
+        </div>
+      </div>
+
+      <div class="group">
+        <p>Пол</p>
+        <div class="chips">
+          @for (option of genders; track option.value) {
+            <button
+              type="button"
+              class="chip"
+              [class.is-on]="gender() === option.value"
+              (click)="toggle('gender', gender(), option.value)"
+            >
+              {{ option.label }}
+            </button>
+          }
+        </div>
+      </div>
+
+      <div class="group">
+        <p>Комплект</p>
+        <div class="chips">
+          @for (option of sets; track option.value) {
+            <button
+              type="button"
+              class="chip"
+              [class.is-on]="set() === option.value"
+              (click)="toggle('set', set(), option.value)"
+            >
+              {{ option.label }}
+            </button>
+          }
+        </div>
+      </div>
+
+      <div class="group">
+        <p>Размер</p>
+        <table class="size-table">
+          <thead>
+            <tr>
+              <th></th>
+              @for (height of sizeHeights; track height) {
+                <th>{{ height }}</th>
+              }
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of sizeRows; track row.chest) {
+              <tr>
+                <th>{{ row.ru }}</th>
+                @for (cell of row.sizes; track cell) {
+                  <td>
+                    <button
+                      type="button"
+                      class="size"
+                      [class.is-on]="size() === cell"
+                      (click)="toggle('size', size(), cell)"
+                    >
+                      {{ row.chest }}
+                    </button>
+                  </td>
+                }
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <button
+        type="button"
+        class="chip cert"
+        [class.is-on]="certified()"
+        (click)="toggleCertified()"
+      >
+        Минпромторг
+      </button>
+    </aside>
+
+    <div class="results">
+      <div class="results-head">
+        <h1>Спецодежда</h1>
+        @if (!loading() && !error()) {
+          <p class="count">{{ filtered().length }} из {{ items().length }}</p>
+        }
+      </div>
+
+      @if (error()) {
+        <p class="note error">{{ error() }}</p>
+      } @else if (loading()) {
+        <p class="note">Загружаем каталог…</p>
+      } @else if (filtered().length === 0) {
+        <p class="note">Нет позиций по этим условиям.</p>
+      } @else {
+        <ul class="cards">
+          @for (item of filtered(); track item.id) {
+            <li>
+              <a class="card" [routerLink]="['/workwear', item.id]">
+                <div class="thumb">
+                  @if (item.imageUrls[0]) {
+                    <img [src]="item.imageUrls[0]" [alt]="item.name" />
+                  } @else {
+                    <span>Нет фото</span>
+                  }
+                </div>
+                <div class="body">
+                  <div class="top">
+                    <span>{{ categoryLabel(item.category) }}</span>
+                    @if (item.isCertified) {
+                      <span class="cert-mark">Минпромторг</span>
+                    }
+                  </div>
+                  <h2>{{ item.name }}</h2>
+                  <p class="sub">
+                    {{ seasonLabel(item.season) }}
+                    ·
+                    {{ genderLabel(item.gender) }}
+                  </p>
+                  <p class="price">{{ formatPrice(item.price) }} ₽</p>
+                </div>
+              </a>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+  </div>
+</section>

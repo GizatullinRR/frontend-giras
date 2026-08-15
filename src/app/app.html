@@ -3,8 +3,8 @@
     <a class="brand" href="/" (click)="goHome($event)">Гирас</a>
 
     <div class="header-contacts">
-      <a class="header-phone" href="tel:+78001234567">+7 (800) 123-45-67</a>
-      <a class="header-mail" href="mailto:info@giras.ru">info@giras.ru</a>
+      <a class="header-phone" href="tel:+79178652303">+7 (917) 865-23-03</a>
+      <a class="header-mail" href="mailto:giras.rf@mail.ru">giras.rf@mail.ru</a>
     </div>
 
     <div class="header-end">
@@ -78,14 +78,22 @@
   <router-outlet />
 </main>
 
+<app-toast-host />
+
 <footer class="site-footer">
   <div class="footer-inner">
     <a class="footer-brand" routerLink="/">Гирас</a>
     <p class="footer-text">Экипировка для производства, склада и улицы</p>
     <nav class="footer-nav">
-      <a href="#catalog" (click)="goToCatalog($event)">Спецодежда</a>
-      <a routerLink="/login">Вход</a>
-      <a routerLink="/register">Регистрация</a>
+      <a routerLink="/workwear">Спецодежда</a>
+      @if (auth.isLoggedIn()) {
+        @if (auth.isAdmin()) {
+          <a routerLink="/admin">Админ</a>
+        }
+      } @else {
+        <a routerLink="/login">Вход</a>
+        <a routerLink="/register">Регистрация</a>
+      }
     </nav>
   </div>
 </footer>

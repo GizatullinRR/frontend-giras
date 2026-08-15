@@ -1,0 +1,133 @@
+<section class="page-panel product">
+  @if (loading()) {
+    <p class="note">Загружаем…</p>
+  } @else if (error() || !item()) {
+    <p class="note error">{{ error() ?? 'Позиция не найдена' }}</p>
+  } @else {
+    @let product = item()!;
+    <nav class="back" aria-label="Навигация">
+      <a routerLink="/workwear">Каталог</a>
+      <span>/</span>
+      <span>{{ product.name }}</span>
+    </nav>
+
+    <div class="layout">
+      <div class="gallery">
+        <div class="stage">
+          @if (product.imageUrls[active()]) {
+            <img [src]="product.imageUrls[active()]" [alt]="product.name" />
+          } @else {
+            <span>Нет фото</span>
+          }
+          @if (product.isCertified) {
+            <em class="cert-badge">Минпромторг</em>
+          }
+          @if (product.imageUrls.length > 1) {
+            <p class="counter">{{ active() + 1 }} / {{ product.imageUrls.length }}</p>
+            <button type="button" class="nav prev" (click)="step(-1)" aria-label="Предыдущее фото">
+              ‹
+            </button>
+            <button type="button" class="nav next" (click)="step(1)" aria-label="Следующее фото">
+              ›
+            </button>
+          }
+        </div>
+        @if (product.imageUrls.length > 1) {
+          <div class="thumbs">
+            @for (url of product.imageUrls; track url; let i = $index) {
+              <button
+                type="button"
+                [class.is-on]="active() === i"
+                (click)="active.set(i)"
+              >
+                <img [src]="url" [alt]="'Фото ' + (i + 1)" />
+              </button>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="info">
+        <div class="chips">
+          <a class="chip" routerLink="/workwear" [queryParams]="{ category: product.category }">
+            {{ categoryLabel(product.category) }}
+          </a>
+          <span class="chip">{{ seasonLabel(product.season) }}</span>
+          <span class="chip">{{ genderLabel(product.gender) }}</span>
+        </div>
+
+        <h1>{{ product.name }}</h1>
+        @if (product.article) {
+          <p class="article">Артикул {{ product.article }}</p>
+        }
+
+        @if (product.description) {
+          <p class="desc">{{ product.description }}</p>
+        }
+
+        <p class="price">{{ formatPrice(product.price) }} ₽</p>
+
+        <dl class="facts">
+          <div>
+            <dt>Комплект</dt>
+            <dd>{{ setLabel(product.set) }}</dd>
+          </div>
+          <div>
+            <dt>Цвет</dt>
+            <dd>{{ product.color }}</dd>
+          </div>
+          <div>
+            <dt>Материал</dt>
+            <dd>{{ product.material }}</dd>
+          </div>
+          <div>
+            <dt>Сезон</dt>
+            <dd>{{ seasonLabel(product.season) }}</dd>
+          </div>
+        </dl>
+
+        @if (product.sizes.length) {
+          <div class="sizes">
+            <p>Размеры в наличии</p>
+            <ul>
+              @for (row of groupedSizes(product.sizes); track row.chest) {
+                <li>
+                  <strong>{{ row.chest }} ({{ row.ru }})</strong>
+                  <span>{{ row.heights.join(', ') }}</span>
+                </li>
+              }
+            </ul>
+          </div>
+        }
+      </div>
+    </div>
+
+    @if (related().length) {
+      <section class="related">
+        <div class="related-head">
+          <h2>Ещё из этой категории</h2>
+          <a routerLink="/workwear" [queryParams]="{ category: product.category }">Все</a>
+        </div>
+        <ul class="cards">
+          @for (item of related(); track item.id) {
+            <li>
+              <a class="card" [routerLink]="['/workwear', item.id]">
+                <div class="thumb">
+                  @if (item.imageUrls[0]) {
+                    <img [src]="item.imageUrls[0]" [alt]="item.name" />
+                  } @else {
+                    <span>Нет фото</span>
+                  }
+                </div>
+                <div class="body">
+                  <h3>{{ item.name }}</h3>
+                  <p>{{ formatPrice(item.price) }} ₽</p>
+                </div>
+              </a>
+            </li>
+          }
+        </ul>
+      </section>
+    }
+  }
+</section>

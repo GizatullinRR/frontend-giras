@@ -1,6 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { apiErrorMessage } from '../../core/api-error';
 import { AuthService } from '../../core/auth/auth.service';
 
 @Component({
@@ -39,12 +40,7 @@ export class Register {
       },
       error: (err) => {
         this.loading.set(false);
-        const message = err.error?.message;
-        this.error.set(
-          Array.isArray(message)
-            ? message.join(', ')
-            : (message ?? 'Не удалось зарегистрироваться'),
-        );
+        this.error.set(apiErrorMessage(err, 'Не удалось зарегистрироваться'));
       },
     });
   }

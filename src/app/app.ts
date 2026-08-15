@@ -1,22 +1,19 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthService } from './core/auth/auth.service';
+import { ToastHost } from './core/toast/toast-host';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, ToastHost],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
-export class App implements OnInit {
+export class App {
   protected readonly auth = inject(AuthService);
   private readonly router = inject(Router);
 
   protected readonly query = signal('');
-
-  ngOnInit() {
-    this.auth.restoreSession();
-  }
 
   goHome(event: Event) {
     event.preventDefault();

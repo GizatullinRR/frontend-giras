@@ -102,58 +102,31 @@
       <h2>Категории и подкатегории</h2>
       <p>
         Полный каталог соберём по разделам. Сейчас открыта витрина спецодежды —
-        остальные направления подключим в том же формате.
+        обувь, перчатки, СИЗ и остальное подключим в том же формате.
       </p>
     </header>
 
     <div class="catalog-grid">
-      <article class="catalog-item">
-        <div class="catalog-media catalog-media--workwear" aria-hidden="true"></div>
-        <div class="catalog-body">
-          <h3>Спецодежда</h3>
-          <p>Куртки, брюки, комбинезоны, костюмы, жилеты</p>
-        </div>
-      </article>
-
-      <article class="catalog-item">
-        <div class="catalog-media catalog-media--shoes" aria-hidden="true"></div>
-        <div class="catalog-body">
-          <h3>Обувь</h3>
-          <p>Ботинки, сапоги, галоши, стельки</p>
-        </div>
-      </article>
-
-      <article class="catalog-item">
-        <div class="catalog-media catalog-media--gloves" aria-hidden="true"></div>
-        <div class="catalog-body">
-          <h3>Перчатки</h3>
-          <p>Защитные, утеплённые, кислотостойкие, монтажные</p>
-        </div>
-      </article>
-
-      <article class="catalog-item">
-        <div class="catalog-media catalog-media--ppe" aria-hidden="true"></div>
-        <div class="catalog-body">
-          <h3>СИЗ</h3>
-          <p>Каски, очки, наушники, респираторы</p>
-        </div>
-      </article>
-
-      <article class="catalog-item">
-        <div class="catalog-media catalog-media--accessories" aria-hidden="true"></div>
-        <div class="catalog-body">
-          <h3>Аксессуары</h3>
-          <p>Пояса, наколенники, сумки, чехлы</p>
-        </div>
-      </article>
-
-      <article class="catalog-item">
-        <div class="catalog-media catalog-media--care" aria-hidden="true"></div>
-        <div class="catalog-body">
-          <h3>Уход</h3>
-          <p>Средства для чистки, пропитки, расходники</p>
-        </div>
-      </article>
+      @for (section of sections; track section.slug) {
+        <a
+          class="catalog-item"
+          [class.is-soon]="!section.ready"
+          [routerLink]="'/' + section.slug"
+        >
+          <div
+            class="catalog-media"
+            [class]="'catalog-media catalog-media--' + section.slug"
+            aria-hidden="true"
+          ></div>
+          <div class="catalog-body">
+            <h3>{{ section.title }}</h3>
+            <p>{{ section.blurb }}</p>
+            @if (!section.ready) {
+              <span class="soon-badge">Скоро</span>
+            }
+          </div>
+        </a>
+      }
     </div>
   </div>
 </section>

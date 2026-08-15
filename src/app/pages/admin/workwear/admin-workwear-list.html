@@ -1,0 +1,105 @@
+<header class="toolbar">
+  <div>
+    <h1>Спецодежда</h1>
+    <p class="admin-muted">
+      @if (loading()) {
+        Загружаем…
+      } @else {
+        {{ items().length }} поз.
+      }
+    </p>
+  </div>
+  <a class="admin-btn" routerLink="/admin/workwear/new">Добавить</a>
+</header>
+
+@if (error()) {
+  <p class="admin-error banner">{{ error() }}</p>
+}
+
+@if (!loading() && items().length === 0) {
+  <div class="admin-card empty">
+    <p>Пока пусто</p>
+    <a class="admin-btn" routerLink="/admin/workwear/new">Первая позиция</a>
+  </div>
+} @else if (!loading()) {
+  <div class="admin-card table-wrap">
+    <ul class="ww-list">
+      @for (item of items(); track item.id; let i = $index; let first = $first; let last = $last) {
+        <li class="ww-row" [class.is-busy]="busyId() === item.id">
+          <div class="ww-order">
+            <button
+              type="button"
+              class="icon-btn"
+              [disabled]="first || reordering()"
+              (click)="move(i, -1)"
+              aria-label="Выше"
+            >
+              ↑
+            </button>
+            <span>{{ i + 1 }}</span>
+            <button
+              type="button"
+              class="icon-btn"
+              [disabled]="last || reordering()"
+              (click)="move(i, 1)"
+              aria-label="Ниже"
+            >
+              ↓
+            </button>
+          </div>
+
+          <a class="ww-thumb" [routerLink]="['/admin/workwear', item.id]">
+            @if (item.imageUrls[0]) {
+              <img [src]="item.imageUrls[0]" [alt]="item.name" />
+            }
+          </a>
+
+          <div class="ww-body">
+            <a class="ww-name" [routerLink]="['/admin/workwear', item.id]">
+              {{ item.name }}
+            </a>
+            <p class="ww-meta">
+              @if (item.article) {
+                <span>арт. {{ item.article }}</span>
+              }
+              <span>{{ seasonLabel(item.season) }}</span>
+              <span>{{ genderLabel(item.gender) }}</span>
+            </p>
+          </div>
+
+          <span class="admin-pill">{{ categoryLabel(item.category) }}</span>
+
+          @if (item.isCertified) {
+            <span class="cert">Минпромторг</span>
+          } @else {
+            <span></span>
+          }
+
+          <div class="ww-price">{{ formatPrice(item.price) }} ₽</div>
+
+          <div class="ww-actions">
+            <a class="admin-btn admin-btn--quiet" [routerLink]="['/admin/workwear', item.id]">
+              Править
+            </a>
+            <button
+              type="button"
+              class="admin-btn admin-btn--quiet"
+              [disabled]="busyId() === item.id"
+              (click)="copy(item)"
+            >
+              Копия
+            </button>
+            <button
+              type="button"
+              class="admin-btn admin-btn--quiet admin-btn--danger"
+              [disabled]="busyId() === item.id"
+              (click)="remove(item)"
+            >
+              Удалить
+            </button>
+          </div>
+        </li>
+      }
+    </ul>
+  </div>
+}
