@@ -205,6 +205,102 @@
   background: color-mix(in srgb, var(--olive) 10%, transparent);
 }
 
+.search-panel {
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  left: 0;
+  right: 0;
+  z-index: 40;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 16px 36px color-mix(in srgb, var(--ink) 12%, transparent);
+}
+
+.search-note {
+  margin: 0;
+  padding: 0.85rem 0.95rem;
+  color: var(--steel);
+  font-size: 0.86rem;
+}
+
+.search-list {
+  list-style: none;
+  margin: 0;
+  padding: 0.3rem;
+  max-height: 22rem;
+  overflow-y: auto;
+}
+
+.search-hit {
+  appearance: none;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr) auto;
+  gap: 0.65rem;
+  align-items: center;
+  padding: 0.45rem 0.5rem;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+}
+
+.search-hit.is-active,
+.search-hit:hover {
+  background: color-mix(in srgb, var(--olive) 8%, white);
+}
+
+.search-thumb {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 7px;
+  overflow: hidden;
+  background: linear-gradient(165deg, #f6f8fb 0%, #e7edf4 100%);
+  border: 1px solid var(--line);
+}
+
+.search-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.search-copy {
+  display: grid;
+  gap: 0.12rem;
+  min-width: 0;
+}
+
+.search-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.25;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.search-sub {
+  color: var(--steel);
+  font-size: 0.75rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.search-kind {
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--olive-deep);
+  white-space: nowrap;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;

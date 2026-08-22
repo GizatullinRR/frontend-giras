@@ -7,7 +7,7 @@ import {
   PLATFORM_ID,
   signal,
 } from '@angular/core';
-import { tap } from 'rxjs';
+import { finalize, tap } from 'rxjs';
 import { API_URL } from '../api';
 import { AuthUser, AuthUserResponse } from './auth.types';
 
@@ -43,7 +43,7 @@ export class AuthService {
   logout() {
     return this.http
       .post(`${API_URL}/auth/logout`, {})
-      .pipe(tap(() => this.clearSession()));
+      .pipe(finalize(() => this.clearSession()));
   }
 
   clearSession() {

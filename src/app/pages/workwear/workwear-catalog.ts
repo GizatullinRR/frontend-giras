@@ -104,7 +104,7 @@ export class WorkwearCatalog {
       this.certified.set(params.get('cert') === '1');
     });
 
-    this.workwearApi.findAll().subscribe({
+    this.workwearApi.findAll().pipe(takeUntilDestroyed()).subscribe({
       next: (items) => {
         this.items.set(items);
         this.loading.set(false);

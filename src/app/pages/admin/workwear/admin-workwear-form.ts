@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -32,6 +32,7 @@ export class AdminWorkwearForm {
   private readonly router = inject(Router);
   private readonly workwearApi = inject(WorkwearService);
   private readonly toast = inject(ToastService);
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly categories = WORKWEAR_CATEGORIES;
   readonly sets = WORKWEAR_SETS;
@@ -148,7 +149,7 @@ export class AdminWorkwearForm {
 
     const id = this.itemId();
     if (id) {
-      this.workwearApi.update(id, this.toPayload()).subscribe({
+      this.workwearApi.update(id, this.toPayload()).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
         next: (item) => {
           this.applyItem(item);
           this.saving.set(false);
@@ -162,7 +163,7 @@ export class AdminWorkwearForm {
       return;
     }
 
-    this.workwearApi.create(this.toPayload()).subscribe({
+    this.workwearApi.create(this.toPayload()).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: (item) => {
         this.saving.set(false);
         this.toast.success('Позиция создана');
@@ -192,6 +193,7 @@ export class AdminWorkwearForm {
       .pipe(
         concatMap((file) => this.workwearApi.addImage(id, file)),
         tap((item) => this.item.set(item)),
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe({
         complete: () => {
@@ -212,7 +214,7 @@ export class AdminWorkwearForm {
     }
 
     this.uploading.set(true);
-    this.workwearApi.removeImage(id, key).subscribe({
+    this.workwearApi.removeImage(id, key).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: (item) => {
         this.item.set(item);
         this.uploading.set(false);

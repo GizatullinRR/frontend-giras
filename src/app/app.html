@@ -11,6 +11,7 @@
       <form
         class="header-search"
         [class.has-query]="query().trim().length > 0"
+        [class.is-open]="open()"
         (submit)="search($event)"
         role="search"
       >
@@ -22,7 +23,13 @@
           autocomplete="off"
           placeholder="Поиск: куртка, ботинки…"
           [value]="query()"
-          (input)="query.set($any($event.target).value)"
+          (input)="onQueryInput($any($event.target).value)"
+          (focus)="open.set(query().trim().length >= 2)"
+          (keydown)="onSearchKeydown($event)"
+          role="combobox"
+          aria-autocomplete="list"
+          [attr.aria-expanded]="open()"
+          aria-controls="header-search-list"
         />
         @if (query().trim().length > 0) {
           <button
@@ -54,6 +61,46 @@
             />
           </svg>
         </button>
+
+        @if (open()) {
+          <div class="search-panel" id="header-search-list" role="listbox">
+            @if (searching()) {
+              <p class="search-note">Ищем…</p>
+            } @else if (results().length === 0) {
+              <p class="search-note">Ничего не найдено</p>
+            } @else {
+              <ul class="search-list">
+                @for (hit of results(); track hit.kind + ':' + hit.id; let i = $index) {
+                  <li>
+                    <button
+                      type="button"
+                      class="search-hit"
+                      role="option"
+                      [class.is-active]="activeIndex() === i"
+                      [attr.aria-selected]="activeIndex() === i"
+                      (mousedown)="$event.preventDefault()"
+                      (click)="openHit(hit)"
+                      (mouseenter)="activeIndex.set(i)"
+                    >
+                      <span class="search-thumb">
+                        @if (hit.imageUrl) {
+                          <img [src]="hit.imageUrl" [alt]="hit.title" />
+                        }
+                      </span>
+                      <span class="search-copy">
+                        <span class="search-title">{{ hit.title }}</span>
+                        @if (hit.subtitle) {
+                          <span class="search-sub">{{ hit.subtitle }}</span>
+                        }
+                      </span>
+                      <span class="search-kind">{{ hit.kind === 'workwear' ? 'Спецодежда' : hit.kind }}</span>
+                    </button>
+                  </li>
+                }
+              </ul>
+            }
+          </div>
+        }
       </form>
 
       <nav class="site-nav" aria-label="Основное меню">

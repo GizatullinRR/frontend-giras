@@ -1,4 +1,5 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { apiErrorMessage } from '../../../core/api-error';
 import { ToastService } from '../../../core/toast/toast.service';
@@ -20,6 +21,7 @@ import { Workwear } from '../../../core/workwear/workwear.types';
 export class AdminWorkwearList implements OnInit {
   private readonly workwearApi = inject(WorkwearService);
   private readonly toast = inject(ToastService);
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly items = signal<Workwear[]>([]);
   readonly loading = signal(true);
@@ -40,7 +42,7 @@ export class AdminWorkwearList implements OnInit {
     this.loading.set(true);
     this.error.set(null);
 
-    this.workwearApi.findAll().subscribe({
+    this.workwearApi.findAll().pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: (items) => {
         this.items.set(items);
         this.loading.set(false);
@@ -65,7 +67,7 @@ export class AdminWorkwearList implements OnInit {
     this.items.set(reordered);
     this.reordering.set(true);
 
-    this.workwearApi.reorder(reordered.map((row) => row.id)).subscribe({
+    this.workwearApi.reorder(reordered.map((row) => row.id)).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: (items) => {
         this.items.set(items);
         this.reordering.set(false);
@@ -84,7 +86,7 @@ export class AdminWorkwearList implements OnInit {
     }
 
     this.busyId.set(item.id);
-    this.workwearApi.copy(item.id).subscribe({
+    this.workwearApi.copy(item.id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: (copy) => {
         this.items.update((list) => [...list, copy]);
         this.busyId.set(null);
@@ -107,7 +109,7 @@ export class AdminWorkwearList implements OnInit {
     }
 
     this.busyId.set(item.id);
-    this.workwearApi.remove(item.id).subscribe({
+    this.workwearApi.remove(item.id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: () => {
         this.items.update((list) => list.filter((row) => row.id !== item.id));
         this.busyId.set(null);
