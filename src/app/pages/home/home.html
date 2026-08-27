@@ -16,11 +16,7 @@
   <div class="hero-stage">
     <div class="hero-copy">
       <p class="hero-brand">Гирас</p>
-      <h1>Спецодежда для цеха, склада и улицы</h1>
-      <p class="hero-text">
-        Основной фокус — рабочая одежда. Плюс обувь, перчатки и СИЗ в одном
-        каталоге.
-      </p>
+      <h1>Защита на производстве</h1>
     </div>
 
     <div class="hero-band" id="home-band">
@@ -29,67 +25,73 @@
           <span class="band-index">01</span>
           <svg class="band-icon" viewBox="0 0 24 24" focusable="false">
             <path
-              d="M4 7h16M7 12h10M10 17h4"
+              d="M4 12 12 4h8v8l-8 8z"
               fill="none"
               stroke="currentColor"
               stroke-width="1.8"
-              stroke-linecap="round"
+              stroke-linejoin="round"
             />
+            <circle cx="16.2" cy="7.8" r="1.15" fill="currentColor" />
           </svg>
         </div>
-        <h2>Под задачу</h2>
-        <p>
-          Подбираем экипировку под склад, цех и улицу: от куртки до перчаток и
-          обуви — без универсального шума.
-        </p>
+        <h2>Низкие цены</h2>
+        <p>Честная цена на штуку и на партию — без накрутки за витрину.</p>
       </article>
       <article class="band-item">
         <div class="band-mark" aria-hidden="true">
           <span class="band-index">02</span>
           <svg class="band-icon" viewBox="0 0 24 24" focusable="false">
-            <rect
-              x="5"
-              y="10"
-              width="14"
-              height="9"
-              rx="1.5"
+            <path
+              d="M3 8h11v9H3zM14 11h4l3 3v3h-7z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linejoin="round"
+            />
+            <circle
+              cx="7"
+              cy="18"
+              r="1.5"
               fill="none"
               stroke="currentColor"
               stroke-width="1.8"
             />
-            <path
-              d="M8 10V8a4 4 0 0 1 8 0"
+            <circle
+              cx="17"
+              cy="18"
+              r="1.5"
               fill="none"
               stroke="currentColor"
               stroke-width="1.8"
-              stroke-linecap="round"
             />
           </svg>
         </div>
-        <h2>Без лишнего</h2>
-        <p>
-          Каталог можно смотреть без входа. Аккаунт понадобится только для заказа
-          и личного кабинета.
-        </p>
+        <h2>По Татарстану</h2>
+        <p>Доставка по Казани и Республике Татарстан: на склад, в цех или на объект.</p>
       </article>
       <article class="band-item">
         <div class="band-mark" aria-hidden="true">
           <span class="band-index">03</span>
           <svg class="band-icon" viewBox="0 0 24 24" focusable="false">
             <path
-              d="M4 8h6v12H4zM14 4h6v16h-6z"
+              d="M12 3 20 6v6c0 5-3.6 8.1-8 9-4.4-.9-8-4-8-9V6z"
               fill="none"
               stroke="currentColor"
               stroke-width="1.8"
               stroke-linejoin="round"
             />
+            <path
+              d="m8.4 12.1 2.4 2.4 4.8-5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
           </svg>
         </div>
-        <h2>Рабочий ритм</h2>
-        <p>
-          Фокус на посадке, материале и смене. Категории и подкатегории — чтобы
-          быстро найти нужное.
-        </p>
+        <h2>Гарантия качества</h2>
+        <p>Материал, посадка и документы на месте. Минпромторг — если есть, видно в карточке.</p>
       </article>
     </div>
   </div>
@@ -97,15 +99,6 @@
 
 <section class="home-catalog home-screen--catalog" id="catalog">
   <div class="catalog-inner">
-    <header class="catalog-head">
-      <p class="eyebrow">Ассортимент</p>
-      <h2>Категории и подкатегории</h2>
-      <p>
-        Полный каталог соберём по разделам. Сейчас открыта витрина спецодежды —
-        обувь, перчатки, СИЗ и остальное подключим в том же формате.
-      </p>
-    </header>
-
     <div class="catalog-grid">
       @for (section of sections; track section.slug) {
         <a

@@ -22,10 +22,10 @@ export class Home {
   protected readonly sections = CATALOG_SECTIONS;
 
   protected readonly slides = [
-    'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=1800&q=80',
-    'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1800&q=80',
-    'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=1800&q=80',
-    'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1800&q=80',
+    '/images/home/hero-1.jpg',
+    '/images/home/hero-2.jpg',
+    '/images/home/hero-3.jpg',
+    '/images/home/hero-4.jpg',
   ] as const;
 
   protected readonly activeSlide = signal(0);

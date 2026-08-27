@@ -106,15 +106,8 @@
   font-size: clamp(1.55rem, 3.6vw, 2.35rem);
   font-weight: 500;
   max-width: 16ch;
-  margin-bottom: 0.85rem;
-  animation: rise-in 0.85s var(--ease-out) 0.08s both;
-}
-
-.hero-text {
-  max-width: 34ch;
-  color: color-mix(in srgb, var(--paper) 82%, transparent);
   margin-bottom: 0;
-  animation: rise-in 0.85s var(--ease-out) 0.16s both;
+  animation: rise-in 0.85s var(--ease-out) 0.08s both;
 }
 
 .hero-band {
@@ -197,37 +190,6 @@
   flex-direction: column;
 }
 
-.catalog-head {
-  flex: 0 0 auto;
-  max-width: 46rem;
-  margin-bottom: clamp(0.75rem, 1.5vw, 1.1rem);
-}
-
-.eyebrow {
-  font-family: var(--font-display);
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  font-size: 0.82rem;
-  color: var(--signal);
-  margin-bottom: 0.35rem;
-}
-
-.catalog-head h2 {
-  font-size: clamp(1.55rem, 3vw, 2.1rem);
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  line-height: 1.05;
-  margin-bottom: 0.4rem;
-  color: var(--olive-deep);
-}
-
-.catalog-head p {
-  color: var(--ink-soft);
-  font-size: 0.95rem;
-  line-height: 1.45;
-  max-width: 42rem;
-}
-
 .catalog-grid {
   flex: 1 1 auto;
   min-height: 0;
@@ -273,23 +235,23 @@
 }
 
 .catalog-media--workwear {
-  background-image: url('https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=900&q=80');
+  background-image: url('/images/home/catalog-workwear.jpg');
 }
 
 .catalog-media--shoes {
-  background-image: url('https://images.unsplash.com/photo-1449505278894-297fdb3edbc1?auto=format&fit=crop&w=900&q=80');
+  background-image: url('/images/home/catalog-shoes.jpg');
 }
 
 .catalog-media--gloves {
-  background-image: url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=900&q=80');
+  background-image: url('/images/home/catalog-gloves.jpg');
 }
 
 .catalog-media--ppe {
-  background-image: url('https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=900&q=80');
+  background-image: url('/images/home/catalog-ppe.jpg');
 }
 
 .catalog-media--other {
-  background-image: url('https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=900&q=80');
+  background-image: url('/images/home/catalog-other.jpg');
 }
 
 .catalog-body {
